@@ -2,10 +2,10 @@
 
 ### Table of Contents
 ### [Week 0 Querying](https://cs50.harvard.edu/sql/2024/weeks/0/)
-- [Cyberchase]()
-- [36 Views]()
+- [Cyberchase](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/cyberchase)
+- [36 Views](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/views)
 - [Normals]()
-- [Players]()
+- [Players]https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/players)
 
 ### [Week 1 Relating](https://cs50.harvard.edu/sql/2024/weeks/1/)
 - [Packages, Please]()
