@@ -1,0 +1,70 @@
+# Some of the help commands in sqlite3
+
+.mode table # to set command to view output
+.quit # to exit from sqlite3
+.read # to read .sql file
+
+
+# SOME SQLITE3 commands
+SELECT MAX("rating") AS "Max Rating" FROM "longlist"; 
+
+
+1.sql
+SELECT "birth_city" FROM "players" WHERE first_name = 'Jackie'  AND "last_name" = 'Robinson';
+
+2.sql
+SELECT "bats" FROM players WHERE "first_name" = 'Babe' AND "last_name" = 'Ruth';
+
+3.sql
+SELECT "id" FROM "players" WHERE "debut" IS NULL;
+
+4.sql
+SELECT "first_name", "last_name" FROM "players" WHERE "birth_country" != 'USA' ORDER BY "first_name" ASC;
+
+5.sql
+SELECT "first_name", "last_name" FROM "players" WHERE "bats" = 'R' ORDER BY "first_name" ASC, "last_name" ASC;
+
+6.sql
+SELECT "first_name", "last_name", "debut" FROM "players" WHERE "birth_City" = 'Pittsburgh' AND "birth_state" = 'PA' ORDER BY "debut" DESC, "first_name" ASC, "last_name" ASC;
+
+7.sql
+SELECT COUNT("first_name") FROM "players" WHERE ("bats" = 'R' AND "throws" = 'L') OR ("bats" = 'L' AND "throws" = 'R');
+
+8.sql
+SELECT ROUND(AVG("height"), 2) AS "Average Height", ROUND(AVG("weight"), 2) AS "Average Weight" FROM "players" WHERE "debut" >= '2000-01-01';
+
+9.sql
+SELECT "first_name", "last_name" FROM "players" WHERE "final_game" LIKE "2022%" ORDER BY "first_name" ASC, "last_name" ASC;
+
+10.sql
+SELECT "first_name", "last_name", "height" AS "Heigth Above Avg." FROM "players" WHERE "height" > (SELECT AVG("Height") FROM "players") ORDER BY "height" DESC, "first_name" ASC, "last_name" ASC;
+
+1.sql
+SELECT "japanese_title", "english_title" FROM "views";
+
+2.sql
+SELECT "average_color" FROM "views" WHERE "artist" = 'Hokusai' AND "english_title" LIKE "%river%";
+
+3.sql
+SELECT COUNT("title") FROM "views" WHERE "artist" = 'Hokusai' AND "english_title" LIKE '%Fuji%';
+
+4.sql
+SELECT COUNT("title") FROM "views" WHERE "artist" = 'Hiroshige' AND "english_title" LIKE '%Eastern Capital%';
+
+5.sql
+SELECT MAX("contrast") AS "Maximum Contrast" FROM "views" WHERE "artist" = 'Hokusai';
+
+6.sql
+SELECT ROUND(AVG("entropy"), 2) AS "Hiroshige Average Entropy" FROM "views" WHERE "artist" = 'Hiroshige';
+
+7.sql
+SELECT "english_title" FROM "views" WHERE "artist" = 'Hiroshige' ORDER BY "brightness" DESC LIMIT 5;
+
+8.sql
+SELECT "english_title" FROM "views" WHERE "artist" = 'Hokusai' ORDER BY "contrast" ASC LIMIT 5;
+
+9.sql
+SELECT "english_title", "artist" FROM "views"  WHERE "brightness" = (SELECT MAX("brightness") FROM "views");
+
+10.sql
+SELECT "english_title" AS "English Title", "artist" AS "Artist" FROM "views" WHERE "brightness" >= 0.7 ORDER BY "english_title" ASC;
