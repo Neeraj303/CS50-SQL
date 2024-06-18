@@ -1,11 +1,11 @@
 ## [CS50’s Introduction to Databases with SQL 2024](https://cs50.harvard.edu/sql/2024/) Solutions
 
 ### Table of Contents
-### [Week 0 Querying](https://cs50.harvard.edu/sql/2024/weeks/0/)
+### [Week 0: Querying](https://cs50.harvard.edu/sql/2024/weeks/0/)
 - [Cyberchase](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/cyberchase)
 - [36 Views](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/views)
 - [Normals]()
-- [Players]https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/players)
+- [Players](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/players)
 
 ### [Week 1: Relating](https://cs50.harvard.edu/sql/2024/weeks/1/)
 - [Packages, Please]()
