@@ -1,4 +1,4 @@
-## [CS50’s Introduction to Databases with SQL 2024](https://cs50.harvard.edu/sql/2024/) Solutions
+## [**CS50’s Introduction to Databases with SQL 2024**](https://cs50.harvard.edu/sql/2024/) Solutions
 
 ### Table of Contents
 ### [Week 0: Querying](https://cs50.harvard.edu/sql/2024/weeks/0/)
