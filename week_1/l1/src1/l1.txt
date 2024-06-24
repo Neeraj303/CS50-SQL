@@ -1,0 +1,93 @@
+# Notes for lecture 1
+
+(0)
+one t0 one (|) 
+one to many 
+many to many
+
+Entity relationship Diagram  (ER Diagram)
+
+
+(ISBN): unqiue for each key (Primary Key) 
+Foreign Key (if you else this key in other table)
+
+Joint table (consists of id for each value in the multiple tables)
+ 
+# SUBQUERIES / NESTED QUERIES
+
+##
+IN
+
+##### JOIN tables
+
+#1. INNER JOIN
+SELECT * FROM "sea_lions"
+JOIN "migrations" ON "migrations"."id" = "sea_lions"."id";
+
+#2. LEFT JOIN
+SELECT * FROM "sea_lions"
+LEFT JOIN "migrations" ON "migrations"."id" = "sea_lions"."id";
+
+#3. RIGHT JOIN
+SELECT * FROM "sea_lions"
+RIGHT JOIN "migrations" ON "migrations"."id" = "sea_lions"."id";
+
+#4. FULL JOIN
+SELECT * FROM "sea_lions"
+FULL JOIN "migrations" ON "migrations"."id" = "sea_lions"."id";
+
+#5. NATURAL JOIN (this does not output id column 2 times in the output)
+SELECT * FROM "sea_lions" 
+NATURAL JOIN "migrations";
+
+
+###### Sets
+
+#1. INTERSECT
+SELECT "name" FROM "authors"
+   ...> INTERSECT
+   ...> SELECT "name" FROM "translators";
+
+#2. UNiON
+SELECT "name" FROM "translators"
+   ...> UNION 
+   ...> SELECT "name" FROM "authors";
+
+#3. EXCEPT
+SELECT "name" FROM "authors"
+   ...> EXCEPT
+   ...> SELECT "name" FROM "translators";
+
+#4. 
+SELECT "name" FROM "authors"
+   ...> UNION 
+   ...> SELECT "name" FROM "translators"
+   ...> EXCEPT  
+   ...> SELECT "name" FROM "authors"
+   ...> INTERSECT
+   ...> SELECT "name" FROM "translators";
+
+
+SELECT "author" AS "Profession", "name" FROM "authors"
+   ...> UNION
+   ...> SELECT "translator" AS "Profession", "name" FROM "translators";
+
+
+
+####### Group by 
+SELECT "book_id", AVG("rating") AS "Average Rating"
+   ...> FROM "ratings"
+   ...> GROUP BY "book_id";
+
+
+# Usage of WHERE when GROUP BY used: HAVING
+SELECT "book_id", ROUND(AVG("rating"), 2) AS "average rating"
+   ...> FROM "ratings"
+   ...> GROUP BY "book_id"
+   ...> HAVING "average rating" > 4.0;
+
+
+SELECT "book_id", COUNT("book_id") AS "Rating Count"
+   ...> FROM "ratings"
+   ...> GROUP BY "book_id";
+
