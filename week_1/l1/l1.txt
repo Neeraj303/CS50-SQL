@@ -91,3 +91,7 @@ SELECT "book_id", COUNT("book_id") AS "Rating Count"
    ...> FROM "ratings"
    ...> GROUP BY "book_id";
 
+
+###############################################################################
+1. you can only GROUP BY columns that are included in SELECT clause.
+
