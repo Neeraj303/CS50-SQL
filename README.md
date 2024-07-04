@@ -8,9 +8,9 @@
 - [Players](https://github.com/Neeraj303/CS50-SQL/tree/main/week_0/players)
 
 ### [Week 1: Relating](https://cs50.harvard.edu/sql/2024/weeks/1/)
-- [Packages, Please]()
-- [DESE]()
-- [Moneyball]()
+- [Packages, Please](https://github.com/Neeraj303/CS50-SQL/tree/main/week_1/packages)
+- [DESE](https://github.com/Neeraj303/CS50-SQL/tree/main/week_1/dese)
+- [Moneyball](https://github.com/Neeraj303/CS50-SQL/tree/main/week_1/moneyball)
 
 ### [Week 2: Designing](https://cs50.harvard.edu/sql/2024/weeks/2/)
 - [ATL]()
