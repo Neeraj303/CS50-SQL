@@ -1,0 +1,67 @@
+############# CS50 SQL Lecture 2 #################
+.schema: the query used to create the table
+
+# to create database 
+sqlite3 mbta.db
+
+# to create a table
+CREATE TABLE "riders" (
+    "id",
+    "name"
+);
+
+CREATE TABLE "stations" (
+(x1...>     "id",
+(x1...>     "name",
+(x1...>     "line"
+(x1...> );
+
+sqlite> CREATE TABLE "visits" (
+(x1...>     "rider_id",
+(x1...>     "station_id"
+(x1...> );
+
+# Data Types
+an INTEGER storage class can have multiple different data types:
+0-byte integer
+1-byte integer
+
+
+# Storage Classes (these for individual values)
+- NULL  
+- INTEGER
+- REAL
+- TEXT
+- BLOB (binary large object, for images)
+
+# Type Affinities (assosciated with individual column)
+TEXT
+NUMERIC (either int, real)
+INTEGER (whole numbers)
+REAL (FLOATING, DECIMAL NUMBER)
+BLOB ??(for binary)
+
+
+#### to delete an table
+DROP TABLE "riders";
+
+#### to create multiple table we use .sql file and give all the table creation command in it
+
+# Table Constraints
+PRIMARY KEY needs to be unique, and integer
+FOREIGN KEY find the value in some other table
+
+# Column Constraints
+apply to particular column
+- CHECK
+- DEFAULT
+- NOT NULL
+- UNIQUE
+
+# ALTERING TABLE
+- DROP TABLE "tablename"
+- ALTER TABLE "tablename" 
+    RENAME T0 "newname"
+    ADD COLUMN "ttpe" TEXT
+    RENAME COLUMN "ttpe" TO "text" 
+    DROP COLUMN "col_name"
