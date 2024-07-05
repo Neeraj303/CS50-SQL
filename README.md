@@ -13,9 +13,9 @@
 - [Moneyball](https://github.com/Neeraj303/CS50-SQL/tree/main/week_1/moneyball)
 
 ### [Week 2: Designing](https://cs50.harvard.edu/sql/2024/weeks/2/)
-- [ATL]()
-- [Happy to Connect]()
-- [Union Square Donuts]()
+- [ATL](https://github.com/Neeraj303/CS50-SQL/tree/main/week_2/atl)
+- [Happy to Connect](https://github.com/Neeraj303/CS50-SQL/tree/main/week_2/connect)
+- [Union Square Donuts](https://github.com/Neeraj303/CS50-SQL/tree/main/week_2/donuts)
 
 ### [Week 3: Writing](https://cs50.harvard.edu/sql/2024/weeks/3/)
 - [Don’t Panic!]()
