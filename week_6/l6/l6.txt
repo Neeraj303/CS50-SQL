@@ -109,7 +109,7 @@ ALTER TABLE `collections`
 ADD COLUMN `deleted` TINYINT DEFAULT 0;
 
 
-#########  Stored Procedures
+#########  Stored Procedures (to save sql query for eay running)
 CREATE PROCEDURE name
 BEGIN
 ...
@@ -127,6 +127,7 @@ delimiter ;
 
 CALL `current_collection`();
 
+-- to add parameter in procedure similar to function
 CREATE PROCEDURE `sell`(IN `sold_id` INT)
 BEGIN
 UPDATE `collections` SET `deleted` = 1
