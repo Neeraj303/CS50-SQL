@@ -1,0 +1,257 @@
+####################   Lecture 6: Scaling  ###################
+
+-- Scalability
+Ability to increase or decrease the capacity of demand
+
+
+-- NEW DBMS (database managment systems)
+- sqlite: emebeded database,
+
+the later ones are database server often run on their own hardware where we connect via internet.
+- MySQL:
+- PostgreSQL:
+
+
+### How to connect to remote server
+To use mysql, you first need to start a MySQL server, as with:
+docker container run --name mysql -p 3306:3306 -v /workspaces/$RepositoryName:/mnt -e MYSQL_ROOT_PASSWORD=crimson -d mysql
+
+You can then connect to the server with:
+mysql -h 127.0.0.1 -P 3306 -u root -p
+Type crimson as your password.
+
+
+SHOW DATABASES;  -- to see default databases
+
+CREATE DATABASE `mbta`; -- we use backtick
+
+USE `mbta`; -- to run query on this database
+
+
+### Types
+
+
+## Datatype for INTEGER
+- TINYINT,    1byte, -128, 127 (signed),      0 - 28-1 (unsigned)
+- SMALLINT,   2byte,
+- MEDIUMINT,  3byte,
+- INT,        4byte,
+- BIGINT,     8byte, -2^63, 2^63-1 (signed),  0 - 2^64-1 (unsigned)
+
+
+CREATE TABLE `cards` (
+    `id` INT AUTO_INCREMENT,
+    PRIMARY KEY(`id`)
+);
+
+SHOW TABLES; -- similar .tables
+DESCRIBE `cards`; -- similar to .schema
+
+### TEXT datatype
+CHAR(fixed length) -- fixed width string
+VARCHAR(max length) --variable length string
+
+-- datatype to store much larger text
+TINYTEXT
+TEXT    -- for l
+MEDIUMTEXT
+LONGTEXT
+
+BLOB
+ENUM -- can store predefined values only, only can choose 1
+SET  -- can choose mulliple options
+
+
+CREATE TABLE `stations` (
+`id` INT AUTO_INCREMENT,
+`name` VARCHAR(32) NOT NULL UNIQUE,
+`line` ENUM('blue', 'green', 'orange', 'red') NOT NULL,
+PRIMARY KEY(`id`)
+);
+
+VARCHAR(300) -- even if the word is small your are wasting 300 bytes
+
+
+### Datatype to store date and time.
+DATE
+TIME(fsp)
+DATETIME(fsp)
+TIMESTAMP(fsp)
+YEAR
+
+####  Datatype for real number
+FLOAT, 4 bytes
+DOUBLE PRECISION, 8 bytes  (due to floating-point imprecision)
+DECIMAL(M,D)   (for fixed precision)
+
+CREATE TABLE `swipes` (
+    `id` INT AUTO_INCREMENT,
+    `card_id` INT,
+    `station_id` INT,
+    `type` ENUM('enter', 'exit', 'deposit') NOT NULL,
+    `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    `amount` DECIMAL(5,2) NOT NULL CHECK (`amount` != 0),
+    PRIMARY KEY(`id`),
+    FOREIGN KEY(`card_id`) REFERENCES `cards`(`id`),
+    FOREIGN KEY(`station_id`) REFERENCES `stations`(`id`)
+);
+
+PRI - PRIMARY KEY
+MUL - FOREIGN KEY
+UNI - UNIQUE
+
+
+######  Altering table
+ALTER TABLE ...
+MODIFY ...;
+
+ALTER TABLE `collections`
+ADD COLUMN `deleted` TINYINT DEFAULT 0;
+
+
+#########  Stored Procedures
+CREATE PROCEDURE name
+BEGIN
+...
+END;
+
+delimiter //
+
+CREATE PROCEDURE `current_collection`()
+    -> BEGIN
+    -> SELECT `title`, `accession_number`, `acquired`
+    -> FROM `collections` WHERE `deleted` = 0;
+    -> END//
+
+delimiter ;
+
+CALL `current_collection`();
+
+CREATE PROCEDURE `sell`(IN `sold_id` INT)
+BEGIN
+UPDATE `collections` SET `deleted` = 1
+WHERE `id` = `sold_id`;
+INSERT INTO `transactions` (`title`, `action`)
+VALUES((SELECT `title` FROM `collections` WHERE `id` = `sold_id`), 'sold');
+END//
+
+
+#### Procedure statements
+IF, ELSEIF, ELSE
+LOOP
+REPEAT
+WHILE
+...
+
+
+#########################  PostgreSQL  ##########################
+yoyu have double quotes
+
+Run this commands to reach postgres console in CS50 Workspace:
+docker run --name postgres -p 5432:5432 -v /workspaces/$RepositoryName:/mnt -e POSTGRES_PASSWORD=crimson -d postgres
+
+docker start postgres
+
+docker exec -it postgres bash
+
+psql postgresql://postgres@127.0.0.1:5432/postgres
+
+## Data type for integers
+SMALLINT,  2bytes
+INT,       4 bytes
+BIGINT,    8 bytes
+
+SMALLSERIAL:
+SERIAL: integer, include auto increment, used for primary key.
+BIGSERIAL:
+
+\l  -- show databases
+CREATE DATABASE "mbta";
+\c "mbta"; -- to connect to database
+\dt -- to check the tables
+\d "cards"  -- to check schema
+
+
+## create type similar to ENUM
+CREATE TYPE "swipe_type"
+AS ENUM ('enter', 'exit', 'deposit');
+
+## DATES, TIMES
+TIMESTAMP(p)
+DATE
+TIME(p)
+INTERVAL(p)
+
+## Real numbers
+MONEY
+NUMERIC(precision, scale)
+
+now() -- at place of CURRENT_TIMESTAMP
+
+\q -- to quit
+
+
+################   VERTICAL Scaling
+Increasing capacity by increasing a server's computing power.
+
+############## Horizontal Scaling
+Increasing capacity by distributing load across multiple servers.
+
+##### Replication
+Keeping copies of a databases on multiple servers
+
+Single-Leader: Single database server have right to update then passed to other server (leader, follower)
+Multi-Leader : mutiple server takes updates
+Leaderless   :
+
+### Read Replica (follower)
+A copy of a database from which data may only be read.
+
+### Communication
+Synchronous: leader will wait for the follower to get data and process it. Much slower
+Asynchronous: leader keep on sending and not waiting. Can also lead to data corruption.
+
+######### Sharding
+large datasets, split the dataset across multiple servers.
+
+
+## Access Control
+CREATE USER 'carter' IDENTIFIED BY 'password';  --created a new user
+
+mysql -u carter -h 127.0.0.1 -P 3306 -p  -- to connect to mysql with the created user
+
+GRANT privilege, ... TO USER;
+REVOKE privilige, ... FROM user;
+
+-- different priviliges
+ALL
+CREATE
+INSERT
+SELECT
+UPDATE
+DELETE
+...
+
+
+GRANT SELECT ON `rideshare`.`analysis` TO `carter`;
+
+############# SQL injection attack
+update a query to do malacious attack.
+
+OR '1' = '1';
+'id' = 1 UNION SELECT 'id' FROM 'accounts';
+
+
+######## Prepared Statements, for ensuring safety
+PREPARE name FROM statement;
+
+SELECT `balance` FROM `accounts` WHERE `id` = ?;
+
+PREPARE `balance_check`
+FROM 'SELECT * FROM `accounts`
+WHERE `id` = ?';
+
+SET @id = 1; -- to store value in variable
+EXECUTE `balance_check` USING @id;
+
+
