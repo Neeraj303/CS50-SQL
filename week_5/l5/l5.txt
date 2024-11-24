@@ -1,0 +1,130 @@
+#############  Lecture 5: Optimizing  ###################
+
+# reduce time for our query or the storage
+# concurrency: many querries all at once.
+
+
+#### time to run the query
+.timer on
+
+-- real time: stopwatch time, from the time i press enter till the time i see the results.
+-- usuer time: time taken on cpu
+-- system time: how long we waited for other processes to finish.
+
+
+# Linear Search (if not sorted) to find a specific row: to look (scan the table) at every row line by line.
+# better way to look at index
+
+
+######## INDEX ###########
+A structure used to speed up the retrieval of rows from a table.
+Keep in mind that indexes take up additional space, and that they can slow INSERT, UPDATE, and DELETE queries. 
+
+CREATE INDEX name
+ON table (col0, ...)
+
+CREATE INDEX "title_index" ON "movies" ("title");
+-- this would result in much faster real time for the query to run.
+
+###### How query are planned
+EXPLAIN QUERY PLAN
+SELECT * FROM "movies" WHERE "title" = 'Cars';
+
+-- Output
+QUERY PLAN
+`--SEARCH movies USING INDEX title_index (title=?)
+Run Time: real 0.000 user 0.000088 sys 0.000028
+
+-- drop the created index.
+DROP INDEX "title_index";
+
+########## Covering Index #############
+An index in which queried data can be retrieved from the index itself.
+Covering index is a special type of index that includes all the columns needed for the query.
+This means the database can fulfill the query directly from the index without having to look up
+additional data in a table.
+
+-- When we create index we are using more memory/space in db
+-- Index uses a data structure: B-Tree
+
+###############  B-Tree  ###################
+A balanced tree structure commonly used to create an index.
+
+-- collection of node.
+-- every node consists of pointer
+-- Root node, children node, leaf node (edge).
+
+-- index column is being copied in a new space, which is sorted with the row number then we use binary
+-- search. We break the index column to represent a single node.
+-- adding any new value takes more time since we need to traverse the tree
+
+
+##################  Partial Index  ####################
+An index that includes only a subset of rows from a table.
+
+CREATE INDEX name
+ON table (col0, .....)
+WHERE condition;
+
+CREATE INDEX "recents" ON "movies" ("title")
+WHERE "year" = 2023;
+
+
+################    VACUUM   #####################
+-- to efficiently use the space
+-- after dropping the index we dont shrink our database, we just mark those bits as available for reuse.
+
+# check file size
+du -b movies.db (disk usage, bytes, linux command)
+du -h movies.db (shows in MB)
+
+VACUUM; (in sqlite)
+
+
+##############     Concurrency    #################
+-- when i get multiple query all at the same time.
+
+
+######### Transaction ############
+A unit of work in a database.
+
+ACID
+- Atomicity: cant break transaction into smaller pieces, we dont see the intermediate part, we see all happening at once.
+- Consistency: dont violate the db constraints
+- Isolation: more than 1 person access the db there query wont interfere with each other.
+- Durability: if unpluged all the data saved, COMMIT.
+
+BEGIN TRANSACTION;
+...
+COMMIT;
+
+BEGIN TRANSACTION;
+UPDATE "accounts" SET "balance" = "balance" + 10
+WHERE "id" = 2;
+UPDATE "accounts" SET "balance" = "balance" - 10
+WHERE "id" = 1;
+COMMIT;
+
+BEGIN TRANSACTION;
+...
+ROLLBACK;
+
+BEGIN TRANSACTION;
+UPDATE "accounts" SET "balance" = "balance" + 10 WHERE "id" = 2;
+UPDATE "accounts" SET "balance" = "balance" - 10 WHERE "id" = 1;
+Runtime error: CHECK constraint failed: balance (19)
+ROLLBACK;
+
+
+-- Race Conditions
+multiple people, multiple processes accessing some value
+we make transaction sequential, we isolate our transactions
+
+
+-- Locks
+UNLOCKED: anybody since nobody is accessing it, so can read and write
+SHARED: only reading and others can also read.
+EXCLUSIVE: when 1 can read and write, others cant access or run any query, lock the entire db
+
+
+BEGIN EXCLUSIVE TRANSACTION;
