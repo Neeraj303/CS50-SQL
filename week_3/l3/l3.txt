@@ -1,0 +1,121 @@
+## Self notes for CS50-SQL Lecture 3: https://www.youtube.com/embed/BD08USRd2M8 ##
+
+- Create
+- Read
+- Update
+- Delete
+
+##### Insert
+INSERT INTO table (column0, ...)
+VALUES
+(value0, ....);
+
+INSERT INTO "collections" ("id", "title", "accession_number", "acquired")
+   ...> VALUES
+        (1, 'Profusion of flowers', '56.27', '1956-04-12');
+
+-- What if we dont specify the id then it automatically increment the value
+-- of "id" (primary key)
+
+# Insert multiple rows
+INSERT INTO table (column0, ...)
+VALUES
+(value0, ....),
+(value1, ....),
+(value2, ....);
+
+-- How to load data stored in csv file
+.import --csv --skip 1 mfa.csv collections ("this is not sql statement this SQLite statement no "collections")
+--we dont want header row in our database so we skip it
+
+
+-- How if we want sqlite to generate the primary keys
+.import --csv mfa.csv temp --this makes a new table named temp
+-- All data imported from csv is in TEXT format
+
+INSERT INTO table0 (column0, ....)
+SELECT column0 ,.. FROM table1;
+
+INSERT INTO "collections" ("title", "accession_number", "acquired")
+SELECT "title", "accession_number", "acquired" FROM "temp";
+
+-- A blank cell when imported form csv will not show up as NULL we need to update it later.
+
+
+##### Delete
+DELETE FROM "collections"; -- this deletes the whole table
+
+DELETE FROM "collections" WHERE "title" = 'Some title';
+DELETE FROM "collections" WHERE "acquired" IS NULL; --deletes all null values in acquired column
+
+-- Multiple rows deletion
+DELETE FROM "collections" WHERE "id" >= 4;
+DELETE FROM "collections" WHERE "acquired" < '1909-01-01';
+
+
+############ Foreign Key constraints
+--If you delete primary key, the other table foreign key does not have any reference.
+-- So we first delete the reference key then the primary key.
+
+.shema table_name --to only ssee pecific table
+
+FOREIGN KEY("artist_id") REFERENCES "artists"("id")
+ON DELETE RESTRICT  --restrict deletion of primary key referenced by the foreign key
+ON DELETE NO ACTION
+ON DELETE SET NULL  -- if i delete the primary key referenced by the foreign key set it to NULL
+ON DELETE DEFAULT
+ON DELETE CASCADE -- if i delete the primary key then the foreign key is also deleted.
+
+##### Update ####
+UPDATE "created" SET "atists_id" = (
+        SELECT "id" FROM "artists"
+        WHERE "name" = 'Li Yin'
+)
+WHERE "collection_id" = (
+        SELECT "id" FROM "collections"
+        WHERE "title" = 'Farmers working at dawn'
+)
+
+UPDATE "votes" SET "title" = trim("title"); --to remove white space
+UPDATE "votes" SET "title" = upper("title"); -- to convert into upper case, the are scaler function
+UPDATE "votes" SET "title" = 'FARMERS WORKING AT DAWN' WHERE "title" LIKE 'Fa%'; -- the 'fa' is case-insensitive
+
+######## Scaler function
+upper()
+lower()
+
+######## Triggers #######
+-- if you delete/add row from 1 table and it enters into other table
+
+CREATE TRIGGER name
+BEFORE/AFTER UPDATE/INSERT/DELETE
+ " INSERT ON table
+ " UPDATE OF column ON table
+ " DELETE ON table
+
+ FOR EACH ROW
+ BEGIN
+        ...;
+END;
+
+CREATE TRIGGER "sell"
+BEFORE DELETE ON "Collections"
+FOR EACH ROW
+BEGIN
+        INSERT INTO "transactions" ("title", "action")
+        VALUES (OLD."title", 'sold');
+END;
+
+CREATE TRIGGER "buy"
+AFTER INSERT ON "collections"
+FOR EACH ROW
+BEGIN
+       INSERT INTO "transactions" ("title", "action")
+       VALUES (NEW."title", 'bought');
+END;
+
+
+#### Soft Deletions #####
+
+
+ALTER TABLE "collections" ADD COLUMN "deleted" INTEGER DEFAULT 0;
