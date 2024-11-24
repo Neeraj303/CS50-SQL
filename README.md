@@ -31,10 +31,10 @@
 - [your.harvard](https://github.com/Neeraj303/CS50-SQL/tree/main/week_5/harvard)
 
 ### [Week 6: Viewing](https://cs50.harvard.edu/sql/2024/weeks/6/)
-- [Happy to Connect (Sentimental)]()
-- [From the Deep]()
-- [Don’t Panic! (Sentimental) with Python]()
-- [Don’t Panic! (Sentimental) with Java]()
+- [Happy to Connect (Sentimental)](https://github.com/Neeraj303/CS50-SQL/tree/main/week_6/sentimental-connect)
+- [From the Deep](https://github.com/Neeraj303/CS50-SQL/tree/main/week_6/deep)
+- [Don’t Panic! (Sentimental) with Python](https://github.com/Neeraj303/CS50-SQL/tree/main/week_6/dont-panic-python)
+
 
 ### [Final Project](https://cs50.harvard.edu/sql/2024/project/)
 ### [Practise SQL](https://github.com/Neeraj303/CS50-SQL/tree/main/extra)
