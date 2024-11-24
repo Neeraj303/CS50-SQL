@@ -1,24 +1,38 @@
 # Notes for lecture 1
 
+##### Summary:
+IN
+JOIN
+GROUP BY
+HAVING (for conditions on groups)
+WHERE (for conditions on rows)
+
+
 (0)
 one t0 one (|) 
 one to many 
 many to many
 
+Relational Database
 Entity relationship Diagram  (ER Diagram)
 
 
-(ISBN): unqiue for each key (Primary Key) 
+(ISBN) unique identifier: unqiue for each key (Primary Key) 
 Foreign Key (if you else this key in other table)
 
-Joint table (consists of id for each value in the multiple tables)
+Joint table/junction table (consists of id for each value in the multiple tables)
  
 # SUBQUERIES / NESTED QUERIES
 
-##
-IN
+## keyword
+IN (to check if a value is in a list of values)
 
-##### JOIN tables
+##### JOIN tables (take 1 table and join it with other table)
+- JOIN (in general inner join)
+- LEFT OUTER JOIN: priortize the left/ first tale. If the value is not present in the right table, it will still show the value from the left table.
+- RIGHT OUTER JOIN: priortize the right/ second tale. If the value is not present in the left table, it will still show the value from the right table.
+- FULL OUTER JOIN: show all the values from both the tables.
+- NATURAL JOIN: join the tables based on the common column name. (it will not show the common column twice in the output)
 
 #1. INNER JOIN
 SELECT * FROM "sea_lions"
@@ -94,4 +108,3 @@ SELECT "book_id", COUNT("book_id") AS "Rating Count"
 
 ###############################################################################
 1. you can only GROUP BY columns that are included in SELECT clause.
-
