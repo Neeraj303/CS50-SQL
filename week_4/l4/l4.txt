@@ -1,0 +1,142 @@
+########################## LECTURE 4: Viewing #########################
+
+--View
+A virtual table defined by query, this does not require any extra storage space.
+
+- simplyfying
+- aggregation
+- Partioning
+- Securing
+
+
+############## Simplfying ##############
+- After joining multiple tables, we can create a view to save the result to query them later on
+CREATE VIEW name AS
+SELECT ....;
+
+CREATE VIEW "longlist" AS
+SELECT
+    "name", "title" FROM "authors"
+JOIN
+    "authored" ON "authors"."id" = "authored"."author_id",
+    "books" ON "books"."id" = "authored"."book_id";
+
+
+########### Aggregation ############
+CREATE VIEW "average_book_ratings" AS
+SELECT "book_id", ROUND(AVG("rating"), 2) AS "Average Rating", "year", "title" FROM "ratings"
+JOIN "books" ON "books"."id" = "ratings"."book_id"
+GROUP BY "book_id";
+
+
+--- Create Temporary View, only exists till the connection with the database is open
+
+- we can use 1 view to create another new view.
+CREATE TEMPORARY VIEW ...
+
+CREATE VIEW temp."average_rating_by_year" AS
+SELECT "year", "Average Rating" FROM "average_book_ratings"
+GROUP BY "year"
+
+-- CTE (Common Table Expression), exists only for the duration of the single query
+WITH "average_book_ratings" AS (
+   ...>     SELECT "book_id", "title", "year", ROUND(AVG("rating"), 2) AS "rating"
+   ...> FROM "ratings"
+   ...> JOIN "books" ON "ratings"."book_id" = "books"."id"
+   ...> GROUP BY "book_id"
+   ...> )
+   ...> SELECT "year", ROUND(AVG("rating"), 2) AS "rating"
+   ...> FROM "average_book_ratings"
+   ...> GROUP BY "year";
+
+
+-- View
+DROP VIEW "average_book_ratings";
+
+
+############### Partitioning ##############
+- We can partition the data into multiple views, to make it easier to query
+- We can use the WHERE clause to filter the data
+
+
+CREATE VIEW "2022" AS
+SELECT "id", "title" FROM "books"
+WHERE "year" = 2022
+
+-- We cannot update/insert/delete data in the view, we need to update the table itself
+
+
+############ Securing ######################
+
+- We need to hide PII (personaly identifiable information)
+
+CREATE VIEW "analysis" AS
+SELECT "id", "origin", "destination", 'Anonymous' AS "rider" FROM "rides"
+
+-- In sqlite we cannot set access control
+
+
+########## Soft Deletions ##########
+
+-- to update view we need to create trigger
+
+CREATE TRIGGER name
+INSTEAD OF DELETE ON view
+FOR EACH ROW
+BEGIN
+    ...;
+END;
+
+CREATE TRIGGER "delete"
+INSTEAD OF DELETE ON "current_collections"
+FOR EACH ROW
+BEGIN
+    UPDATE "collections" SET "deleted" = 1 WHERE "id" = OLD."id";
+END;
+
+
+-- Trigger aso have conditional usage
+
+CREATE TRIGGER name
+INSTEAD OF INSERT ON view
+FOR EACH ROW
+WHEN condition
+BEGIN
+
+
+CREATE TRIGGER "insert"
+INSTEAD OF INSERT ON "current_collections"
+FOR EACH ROW
+WHEN NEW."accession_number" IN (SELECT "accession_number" FROM "collections")
+BEGIN
+    UPDATE "collections" SET "deleted" = 0
+    WHERE "accession_number" = NEW."accession_number";
+END;
+
+
+######################   EXTRA STUFF ###############################
+
+####### PIVOTING
+SELECT <columns> FROM
+(
+	<source_query>
+) AS SRC
+PIVOT
+(
+	<aggr_function>(<aggr_column>)
+		FOR <spreading_column> IN (<spreading_elements>)
+)
+
+###### Window Functions (https://www.youtube.com/watch?v=xMWEVFC4FOk)
+- ROW_NUMBER() OVER(PARTITION BY ... ORDER BY)  
+- RANK() OVER()
+- DENSE_RANK() OVER()
+- CONCAT()
+- CASE WHEN THEN ELSE (for pivot in MySql)
+- LENGTH()
+- REGEXP
+- CAST( AS DATE)  (to convert to different data type)	
+- RIGHT(name, 1) (get the first letter from the right
+- LIKE 'Gre_n'
+- YEAR(date) (to get the year from the date)
+- COALESCE(value, 0)  (if value is NULL then outputs 0
