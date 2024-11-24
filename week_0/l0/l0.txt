@@ -1,5 +1,6 @@
 # Some of the help commands in sqlite3
 
+.tables 
 .mode table # to set command to view output
 .quit # to exit from sqlite3
 .read # to read .sql file
@@ -7,7 +8,22 @@
 
 # SOME SQLITE3 commands
 SELECT MAX("rating") AS "Max Rating" FROM "longlist"; 
+LIMIT
+BETWEEN .. AND ..;
+LIKE is case insensitive
+= is case sensitive
+IS NOT NULL
 
+Aggregate functions:
+COUNT
+AVG
+MIN
+MAX
+SUM
+
+ROUND(AVG("Column name"), 2) AS "Average Rating"
+COUNT(*) # for total rows in the database.
+SELECT DISTINCT "publisher" FROM "longlist";
 
 1.sql
 SELECT "birth_city" FROM "players" WHERE first_name = 'Jackie'  AND "last_name" = 'Robinson';
