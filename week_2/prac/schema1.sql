@@ -1,6 +1,6 @@
 CREATE TABLE "cards" (
     "id" INTEGER,
-    PRIMARY("id")
+    PRIMARY KEY("id")
 );
 
 CREATE TABLE "stations" (
@@ -11,13 +11,13 @@ CREATE TABLE "stations" (
 );
 
 CREATE TABLE "swipes" (
-    "id" INTEGER --Default type is NUMERIC
-    "card_id" INTEGER
+    "id" INTEGER,
+    "card_id" INTEGER,
     "station_id" INTEGER,
-    "type" TEXT NOT NULL CHECK("type" IN ('enter', 'exit', 'deposit')),
+    "type" TEXT NOT NULL (CHECK("type" IN ('entry', 'exit', 'deposit'))),
     "datetime" NUMERIC NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "amount" NUMERIC NOT NULL CHECK("amount" != 0),
     PRIMARY KEY("id"),
     FOREIGN KEY("card_id") REFERENCES "cards"("id"),
     FOREIGN KEY("station_id") REFERENCES "stations"("id")
-)
+);

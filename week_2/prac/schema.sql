@@ -1,5 +1,5 @@
 CREATE TABLE "riders" (
-    "id" INTEGER, -- we dont need NOT NULL, UNIQUE in this since primary key contraint invilve that
+    "id" INTEGER,
     "name" TEXT,
     PRIMARY KEY("id")
 );
@@ -14,8 +14,6 @@ CREATE TABLE "stations" (
 CREATE TABLE "visits" (
     "rider_id" INTEGER,
     "station_id" INTEGER,
-    FOREIGN KEY("rider_id") REFERENCES "riders"("id")
+    FOREIGN KEY("rider_id") REFERENCES "riders"("id"),
     FOREIGN KEY("station_id") REFERENCES "stations"("id")
-    -- PRIMARY KEY("rider_id", "station_id") -- Joint Primary key
-    -- Sqlite by default give own primary called row id
 );

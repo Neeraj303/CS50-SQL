@@ -1,7 +1,12 @@
 ############# CS50 SQL Lecture 2 #################
-.schema: the query used to create the table
+.schema: to check all the table information
 
-# to create database 
+# to check organiztion of the table
+.schema tablename
+
+# Normalizing: to reduce redundancy, to create a table for each entity
+
+# to create database
 sqlite3 mbta.db
 
 # to create a table
@@ -28,18 +33,19 @@ an INTEGER storage class can have multiple different data types:
 
 
 # Storage Classes (these for individual values)
-- NULL  
+- NULL
 - INTEGER
-- REAL
+- REAL (floating point number)
 - TEXT
 - BLOB (binary large object, for images)
 
 # Type Affinities (assosciated with individual column)
-TEXT
-NUMERIC (either int, real)
-INTEGER (whole numbers)
-REAL (FLOATING, DECIMAL NUMBER)
-BLOB ??(for binary)
+- TEXT
+- NUMERIC (either int, real): this is the default type if not mentioned
+- INTEGER (whole numbers)
+- REAL (FLOATING, DECIMAL NUMBER)
+- BLOB ??(for binary)
+- DATETIME
 
 
 #### to delete an table
@@ -47,21 +53,22 @@ DROP TABLE "riders";
 
 #### to create multiple table we use .sql file and give all the table creation command in it
 
-# Table Constraints
+# Table Constraints (Apply to table as whole)
 PRIMARY KEY needs to be unique, and integer
 FOREIGN KEY find the value in some other table
+FOREIGN KEY("col1") REFERENCES "table_name"("col_name")
 
-# Column Constraints
+# Column Constraints (Apply to particular column)
 apply to particular column
-- CHECK
-- DEFAULT
-- NOT NULL
-- UNIQUE
+- CHECK: to check the value
+- DEFAULT: to set the default value
+- NOT NULL: to make sure the value is not null
+- UNIQUE: to make sure the value is unique
 
-# ALTERING TABLE
-- DROP TABLE "tablename"
-- ALTER TABLE "tablename" 
-    RENAME T0 "newname"
-    ADD COLUMN "ttpe" TEXT
-    RENAME COLUMN "ttpe" TO "text" 
-    DROP COLUMN "col_name"
+# ALTERING TABLE (to update an already existing table)
+- DROP TABLE "tablename";
+- ALTER TABLE "tablename"
+    RENAME T0 "newname";
+    ADD COLUMN "ttpe" TEXT;
+    RENAME COLUMN "ttpe" TO "text";
+    DROP COLUMN "col_name";
