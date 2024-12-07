@@ -1,7 +1,8 @@
 ## **Extra Resources to Practise SQL**
 
 - [DataExpert.io](https://www.dataexpert.io/questions) | [My Solution](extra/dataexpert)
-- [Hacker Rank](https://www.hackerrank.com/domains/sql)
+- [Dataford](https://dataford.io/learningpath/SQL-Practice-Problems) | [My Solution](extra/dataford)
+- [Hacker Rank](https://www.hackerrank.com/domains/sql) | [My Solution](extra/hackerrank)
 - [DataLemur](https://datalemur.com/)
 - [SQL Murder Mystery](https://mystery.knightlab.com/)
 - [StrataScratch](https://platform.stratascratch.com/coding?code_type=3&is_freemium=1)
