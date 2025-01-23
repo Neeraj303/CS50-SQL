@@ -4,4 +4,26 @@ My solutions for the [SQL Practice Problems book by Sylvia Moestl Vasilik](extra
 
 ```bash
 sqlite3 sqlite_pp.db
+.mode table
+
+# To view the tables
+.tables
+```
+### Introductory Problems
+```sql
+-- 1.Which shippers do we have?
+SELECT * FROM shippers;
+
+-- 2. Certain fields from Categories
+SELECT CategoryName, Description FROM categories;
+
+-- 3. Sales Representatives
+SELECT FirstName, LastName, HireDate FROM employees WHERE title = 'Sales Representative';
+
+-- 4. Sales Representatives in the United States
+SELECT FirstName, LastName, HireDate FROM employees WHERE title = 'Sales Representative' AND country = 'USA';
+
+-- 5. Orders placed by specific EmployeeID
+--
+
 ```
