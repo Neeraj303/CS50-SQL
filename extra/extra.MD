@@ -1,5 +1,6 @@
 ## **Extra Resources to Practise SQL**
 
+- [SQL Practice Problems book by Sylvia Moestl Vasilik](http://www.sqlpracticeproblems.com) | [My Solution](extra/sql_practise_problems_sylvia)
 - [DataExpert.io](https://www.dataexpert.io/questions) | [My Solution](extra/dataexpert)
 - [Dataford](https://dataford.io/learningpath/SQL-Practice-Problems) | [My Solution](extra/dataford)
 - [Hacker Rank](https://www.hackerrank.com/domains/sql) | [My Solution](extra/hackerrank)
