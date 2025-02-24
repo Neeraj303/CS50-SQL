@@ -59,51 +59,51 @@ NATURAL JOIN "migrations";
 
 #1. INTERSECT
 SELECT "name" FROM "authors"
-   ...> INTERSECT
-   ...> SELECT "name" FROM "translators";
+INTERSECT
+SELECT "name" FROM "translators";
 
 #2. UNiON
 SELECT "name" FROM "translators"
-   ...> UNION 
-   ...> SELECT "name" FROM "authors";
+UNION 
+SELECT "name" FROM "authors";
 
 #3. EXCEPT
 SELECT "name" FROM "authors"
-   ...> EXCEPT
-   ...> SELECT "name" FROM "translators";
+EXCEPT
+SELECT "name" FROM "translators";
 
 #4. 
 SELECT "name" FROM "authors"
-   ...> UNION 
-   ...> SELECT "name" FROM "translators"
-   ...> EXCEPT  
-   ...> SELECT "name" FROM "authors"
-   ...> INTERSECT
-   ...> SELECT "name" FROM "translators";
+UNION 
+SELECT "name" FROM "translators"
+EXCEPT  
+SELECT "name" FROM "authors"
+INTERSECT
+SELECT "name" FROM "translators";
 
 
 SELECT "author" AS "Profession", "name" FROM "authors"
-   ...> UNION
-   ...> SELECT "translator" AS "Profession", "name" FROM "translators";
+UNION
+SELECT "translator" AS "Profession", "name" FROM "translators";
 
 
 
 ####### Group by 
 SELECT "book_id", AVG("rating") AS "Average Rating"
-   ...> FROM "ratings"
-   ...> GROUP BY "book_id";
+FROM "ratings"
+GROUP BY "book_id";
 
 
 # Usage of WHERE when GROUP BY used: HAVING
 SELECT "book_id", ROUND(AVG("rating"), 2) AS "average rating"
-   ...> FROM "ratings"
-   ...> GROUP BY "book_id"
-   ...> HAVING "average rating" > 4.0;
+FROM "ratings"
+GROUP BY "book_id"
+HAVING "average rating" > 4.0;
 
 
 SELECT "book_id", COUNT("book_id") AS "Rating Count"
-   ...> FROM "ratings"
-   ...> GROUP BY "book_id";
+FROM "ratings"
+GROUP BY "book_id";
 
 
 ###############################################################################
