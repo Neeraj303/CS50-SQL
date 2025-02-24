@@ -1,7 +1,7 @@
 ## **Extra Resources to Practise SQL**
 
-- [SQL Practice Problems book by Sylvia Moestl Vasilik](http://www.sqlpracticeproblems.com) | [My Solution](sql_practise_problems_sylvia)
-- [Basics of databases spring 2025](https://tikape.mooc.fi/kevat-2025/) | [My Solution](./mooc_sql_task/README.md)
+- [SQL Practice Problems book by Sylvia Moestl Vasilik](http://www.sqlpracticeproblems.com) | [My Solution](./sql_practise_problems_sylvia/README.md)
+- [Basics of databases spring 2025](https://tikape.mooc.fi/kevat-2025/) | [My Solution](./mooc_sql/README.md)
 - [DataExpert.io](https://www.dataexpert.io/questions) | [My Solution](dataexpert)
 - [Dataford](https://dataford.io/learningpath/SQL-Practice-Problems) | [My Solution](dataford)
 - [Hacker Rank](https://www.hackerrank.com/domains/sql) | [My Solution](hackerrank)
